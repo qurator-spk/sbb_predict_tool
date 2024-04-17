@@ -1,6 +1,6 @@
 tensorflow == 2.11
 pandas
 tqdm
-openc-python
+opencv-python
 seaborn
 
