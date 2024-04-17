@@ -226,7 +226,6 @@ class sbb_predict:
         #self.model = load_model(self.model_dir , compile=False)
         
         if self.weights_dir!=None:
-            print('man burdayammmmaaa')
             self.model.load_weights(self.weights_dir)
             
         
@@ -237,12 +236,11 @@ class sbb_predict:
     def predict(self):
         self.start_new_session_and_model()
         if self.patches=='true' or self.patches=='True':
-            print(self.patches,'gadaaiikk')
             #def textline_contours(img,input_width,input_height,n_classes,model):
             
             img=cv2.imread(self.image)
             
-            img = self.otsu_copy_binary(img)
+            #img = self.otsu_copy_binary(img)
             
             #plt.imshow(img)
             #plt.show()
@@ -316,7 +314,7 @@ class sbb_predict:
                         img_patch = img[index_y_d:index_y_u, index_x_d:index_x_u, :]
 
                         label_p_pred = self.model.predict(
-                            img_patch.reshape(1, img_patch.shape[0], img_patch.shape[1], img_patch.shape[2]))
+                            img_patch.reshape(1, img_patch.shape[0], img_patch.shape[1], img_patch.shape[2]), verbose=0)
 
                         seg = np.argmax(label_p_pred, axis=3)[0]
                         
@@ -511,7 +509,7 @@ class sbb_predict:
 
                 
                 ###img = cv2.medianBlur(img,5)
-                img=self.otsu_copy_binary(img)
+                #img=self.otsu_copy_binary(img)
                 
                 #img=cv2.bilateralFilter(img,9,75,75)
                 ##img = cv2.GaussianBlur(img,(5,5),0)
@@ -540,7 +538,6 @@ class sbb_predict:
                 else:
                     nyf=int(nyf)
 
-                print(nxf,nyf)
                 for i in range(nxf):
                     for j in range(nyf):
                         index_x_d=i*width
@@ -618,12 +615,10 @@ class sbb_predict:
                 img.reshape(1,img.shape[0],img.shape[1],img.shape[2]))
 
             seg=np.argmax(label_p_pred,axis=3)[0]
-            print(np.shape(seg),np.unique(seg))
             
             plt.imshow(seg*255)
             plt.show()
             seg_color=self.color_images(seg)
-            print(np.shape(seg_color),np.unique(seg_color),'seg_color')
 
 
             #imgs = seg_color#/np.max(seg_color)*255#np.repeat(seg_color[:, :, np.newaxis], 3, axis=2)
@@ -643,11 +638,10 @@ class sbb_predict:
             
         if self.ground_truth!=None:
             gt_img=cv2.imread(self.ground_truth)
-            print(np.shape(gt_img),np.shape(res))
             self.IoU(gt_img[:,:,0],res)
-        print(np.unique(res))
         plt.imshow(res)
         plt.show()
+
 def main():
     parser=argparse.ArgumentParser()
     
