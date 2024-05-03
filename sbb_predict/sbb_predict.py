@@ -20,7 +20,6 @@ from tensorflow.keras import backend as K
 from tensorflow.keras import layers
 import tensorflow.keras.losses
 from tensorflow.keras.layers import *
-
 from tensorflow.python.keras import backend as tensorflow_backend
 
 
@@ -246,10 +245,9 @@ class sbb_predict:
             #plt.show()
             
             if img.shape[0]<self.img_height:
-                img=cv2.resize( img, ( img.shape[1],self.img_width) ,interpolation=cv2.INTER_NEAREST)
-
+                img=cv2.resize( img, (img.shape[1], self.img_height) ,interpolation=cv2.INTER_NEAREST)
             if img.shape[1]<self.img_width:
-                img=cv2.resize( img, ( self.img_height,img.shape[0]) ,interpolation=cv2.INTER_NEAREST)
+                img=cv2.resize( img, (self.img_width, img.shape[0]) ,interpolation=cv2.INTER_NEAREST)
 
             margin=True
             
@@ -632,8 +630,10 @@ class sbb_predict:
 
     def run(self):
         res=self.predict()
+        #res = res * -1
+        #res = res + 1
         if self.save!=None:
-            img=np.repeat(res[:, :, np.newaxis]*255, 3, axis=2)
+            img=np.repeat(res[:, :, np.newaxis]*1, 3, axis=2)
             cv2.imwrite(self.save,img)
             
         if self.ground_truth!=None:
