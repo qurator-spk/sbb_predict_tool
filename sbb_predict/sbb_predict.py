@@ -20,7 +20,6 @@ from tensorflow.keras import backend as K
 from tensorflow.keras import layers
 import tensorflow.keras.losses
 from tensorflow.keras.layers import *
-
 from tensorflow.python.keras import backend as tensorflow_backend
 
 
